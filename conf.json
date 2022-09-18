@@ -1,7 +1,7 @@
 {
 	"baseUrl": "https://cataas.com/cat/says/",
 	"queryParams": {
-		"greeting": "Hi",
+		"greeting": "Hello",
 		"who": "World",
 		"width": 400, 
 		"height": 500, 

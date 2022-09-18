@@ -4,9 +4,8 @@ let request = require('request');
 let mergeImg = require('merge-img');
 let minimist = require('minimist');
 
-class MyModule {
+class CatImageMerge {
     constructor() {
-        this.global= 'foo';
         this.loadConfig();
         this.parseArguments();
     }
@@ -98,6 +97,6 @@ class MyModule {
     }
 }
 
-let myModule = new MyModule()
-myModule.main()
+let catImageMerge = new CatImageMerge()
+catImageMerge.main()
 
