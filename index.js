@@ -30,8 +30,7 @@ class MyModule {
         return new Promise((resolve, reject) => {
             request.get({url, encoding: "binary"}, (err, res, firstBody) => { 
                 if(err) {
-                    reject(err);
-                    return; 
+                    return reject(err);
                 }
                 resolve({res, firstBody});
             });
@@ -43,7 +42,7 @@ class MyModule {
     }
     
     async getData(param) {
-        let url = this.baseUrl + param + '?width=' + this.width + '&height=' + this.height + '&color' + this.color + '&s=' + this.size;
+        let url = `${this.baseUrl} ${param} ?width= ${this.width} &height=${this.height} &color ${this.color} &s=${this.size}`;
         try {
             let response = await this.makeRequest(url);
             return this.processValue(response);
@@ -54,26 +53,30 @@ class MyModule {
     }
 
     async merge(firstBody, secondBody) {
-        mergeImg([ 
-          { src: new Buffer.from(firstBody, 'binary'), x: 0, y:0 }, 
-          { src: new Buffer.from(secondBody, 'binary'), x: this.width, y: 0 }
-        ]).then(img => {
-          img.getBuffer('image/jpeg', (err, buffer) => {
-                if (err) {
-                  console.log(err)
-                }
+        try {
+            mergeImg([ 
+              { src: new Buffer.from(firstBody1, 'binary'), x: 0, y:0 }, 
+              { src: new Buffer.from(secondBody, 'binary'), x: this.width, y: 0 }
+            ]).then(img => {
+              img.getBuffer('image/jpeg', (err, buffer) => {
+                    if (err) {
+                      console.log(err)
+                    }
 
-                const fileOut = join(process.cwd(), `/cat-card.jpg`);
-                
-                writeFile(fileOut, buffer, 'binary', (err) => { if(err) {
-                    console.log(err);
-                    return; 
-                }
-                
-                console.log("The file was saved!"); });
-              });
-            }); 
+                    const fileOut = join(process.cwd(), `/cat-card.jpg`);
+                    
+                    writeFile(fileOut, buffer, 'binary', (err) => { if(err) {
+                        console.log(err);
+                        return; 
+                    }
+                    
+                    console.log("The file was saved!"); });
+                  });
+            });
+        } catch(e) {
+            throw e;
         }
+    }
     
     async main() {
         try {
@@ -91,7 +94,6 @@ class MyModule {
             this.merge(firstResp, secondResp);
         } catch(e) {
             console.log(`Got Exception : ${e}`);
-            throw e;
         }
     }
 }
