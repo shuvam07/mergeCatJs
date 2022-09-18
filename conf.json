@@ -1,0 +1,11 @@
+{
+	"baseUrl": "https://cataas.com/cat/says/",
+	"queryParams": {
+		"greeting": "Hi",
+		"who": "World",
+		"width": 400, 
+		"height": 500, 
+		"color": "Pink", 
+		"size": 100
+	}
+}
